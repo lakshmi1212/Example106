@@ -1,33 +1,30 @@
-# Example106 - Math Operations
+# Example106 Math Operations
 
-This repository demonstrates basic math operations (addition and subtraction) implemented in Python, with automated tests and CI workflow integration.
-
-## Folder Structure
-
-- `src/` - Source code for math operations
-- `tests/` - Pytest-based unit tests
-- `default/` - Metadata, requirements, and documentation
+## Overview
+This project implements basic math operations (addition and subtraction) with production-ready pytest tests and CI/CD workflow integration.
 
 ## Usage
 
-1. Install dependencies:
-   ```bash
-   pip install -r default/requirements.txt
-   ```
-2. Run tests:
-   ```bash
-   pytest tests/
-   ```
+### Math Functions
+- `add(a, b)`: Returns sum of two numbers.
+- `subtract(a, b)`: Returns difference between two numbers.
 
-## CI/CD
+### Running Tests
+Install dependencies:
+```
+pip install -r default/requirements.txt
+```
+Run tests:
+```
+python -m pytest tests/ -v --tb=short --junitxml=reports/report.xml --html=reports/report.html --self-contained-html
+```
 
-A GitHub Actions workflow (see `.github/workflows/ci.yml`) runs all tests and generates reports on every push to the Feature1 branch and PRs to main.
+## CI/CD Workflow
+- Automated tests run on push to `Feature1` or pull request to `main`.
+- Test reports are generated in `reports/`.
+- Results are uploaded to S3 bucket.
 
-## Requirements
-
-- Python 3.10 or higher
-- See `default/requirements.txt`
-
-## Maintainers
-
-- QA Automation & DevOps Integration Agent
+## Structure
+- `src/`: Business logic
+- `tests/`: Test cases
+- `default/`: Metadata, requirements, documentation
