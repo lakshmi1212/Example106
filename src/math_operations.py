@@ -1,8 +1,8 @@
 def add(a, b):
-    """Return the sum of a and b."""
+    """Add two numbers and return the result."""
     return a + b
 
 
 def subtract(a, b):
-    """Return the difference of a and b (a - b)."""
+    """Subtract b from a and return the result."""
     return a - b
