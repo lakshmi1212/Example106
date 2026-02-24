@@ -1,20 +1,32 @@
 import pytest
 from src.math_operations import add
 
-@pytest.mark.parametrize("a, b, expected", [
-    (1, 1, 2),
-    (0, 0, 0),
-    (-1, -1, -2),
-    (-1, 1, 0),
-    (1.5, 2.5, 4.0),
-    (1e10, 1, 1e10 + 1),
-])
-def test_add(a, b, expected):
-    assert add(a, b) == expected
+def test_add_positive_integers():
+    assert add(2, 3) == 5
 
+def test_add_negative_integers():
+    assert add(-2, -3) == -5
 
-def test_add_type_error():
+def test_add_mixed_sign_integers():
+    assert add(-2, 3) == 1
+
+def test_add_zeros():
+    assert add(0, 0) == 0
+    assert add(0, 5) == 5
+    assert add(5, 0) == 5
+
+def test_add_floats():
+    assert add(2.5, 3.1) == pytest.approx(5.6)
+    assert add(-2.5, 2.5) == pytest.approx(0.0)
+
+def test_add_int_and_float():
+    assert add(2, 3.5) == pytest.approx(5.5)
+    assert add(2.5, 3) == pytest.approx(5.5)
+
+def test_add_invalid_types():
     with pytest.raises(TypeError):
-        add('a', 1)
+        add('2', 3)
     with pytest.raises(TypeError):
-        add(1, None)
+        add(2, None)
+    with pytest.raises(TypeError):
+        add([1,2], 3)
