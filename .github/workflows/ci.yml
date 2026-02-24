@@ -1,5 +1,3 @@
-name: CI Pipeline
-
 on:
   push:
     branches:
@@ -11,21 +9,23 @@ on:
       - main
 
 jobs:
-  ci-test:
+  test:
     runs-on: ubuntu-latest
-    name: Run Pytest and Generate Reports
+    name: Python CI Test
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Set up Python 3.10
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
       - name: Install dependencies
-        run: pip install -r default/requirements.txt
+        run: |
+          pip install -r default/requirements.txt
       - name: Create reports directory
-        run: mkdir -p reports
-      - name: Run tests with pytest
+        run: |
+          mkdir -p reports
+      - name: Run tests
         run: |
           python -m pytest tests/ -v --tb=short --junitxml=reports/report.xml --html=reports/report.html --self-contained-html
       - name: Configure AWS credentials
@@ -42,4 +42,4 @@ jobs:
       - name: Upload reports to S3
         if: always()
         run: |
-          aws s3 sync reports/ s3://ci-test-results-bucket/pytest-reports/${{ github.sha }}/
+          aws s3 sync reports/ s3://ci-test-results-bucket/pytest-reports/${{ env.DATE }}/${{ github.sha }}
